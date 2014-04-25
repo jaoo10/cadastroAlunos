@@ -15,8 +15,10 @@ int main(){
 			
 			case 1:
 				importarDados();
+				break;
 			case 2:
 				inserirAluno();
+				break;
 		}		
 
 	}
@@ -43,13 +45,15 @@ int menu(){
 
 }
 
-int lerCampo(char cct,FILE *fd,char buffer[MAX_REC_SIZE +1]){
-
-	while (cct != '\t'){
-		strcat(buffer,cct);
+int lerCampo(char cct,FILE *fd,char buffer[]){
+	char s[2];
+	while(cct != '\t'){
+		s[0] = cct;
+		s[1] = '\0';
+		strcat(buffer,s);
 		cct = fgetc(fd);
-	strcat(DELIM_STR,buffer);
 	}
+	strcat(buffer,DELIM_STR);
 }
 
 int importarDados(){
@@ -65,11 +69,8 @@ int importarDados(){
 
 	arqDados = fopen(nomeDados,"r");
 	arqDestino = fopen(nomeDestino,"w");
-
 	c = fgetc(arqDados);
-	
 	while(c != EOF){
-	
 		recbuff[0] = '\0';
 		while(c != '\n'){
 			lerCampo(c,arqDados,recbuff);
